@@ -1,5 +1,5 @@
 {
-  "charts": {
+  "development": {
     "garage": {
       "app_readme": "<h1>Garage</h1>\n<p><a href=\"https://garagehq.deuxfleurs.fr/\">Garage</a> is an open-source distributed object storage service tailored for self-hosting</p>",
       "categories": ["storage"],
