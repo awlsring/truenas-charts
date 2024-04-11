@@ -258,6 +258,17 @@ questions:
           schema:
             type: dict
             required: false
+            attrs:
+              - variable: key
+                description: "key"
+                label: "key"
+                schema:
+                  type: string
+              - variable: value
+                description: "value"
+                label: "value"
+                schema:
+                  type: string
 
         - variable: name
           description: "The name of the service account to use."
@@ -389,6 +400,17 @@ questions:
                       schema:
                         type: dict
                         required: false
+                        attrs:
+                          - variable: key
+                            description: "key"
+                            label: "key"
+                            schema:
+                              type: string
+                          - variable: value
+                            description: "value"
+                            label: "value"
+                            schema:
+                              type: string
 
                     - variable: labels
                       description: "The labels to add to the S3 API Ingress."
@@ -396,6 +418,17 @@ questions:
                       schema:
                         type: dict
                         required: false
+                        attrs:
+                          - variable: key
+                            description: "key"
+                            label: "key"
+                            schema:
+                              type: string
+                          - variable: value
+                            description: "value"
+                            label: "value"
+                            schema:
+                              type: string
 
                     - variable: hosts
                       description: "The hosts to use for the S3 API Ingress."
@@ -483,6 +516,17 @@ questions:
                       schema:
                         type: dict
                         required: false
+                        attrs:
+                          - variable: key
+                            description: "key"
+                            label: "key"
+                            schema:
+                              type: string
+                          - variable: value
+                            description: "value"
+                            label: "value"
+                            schema:
+                              type: string
 
                     - variable: labels
                       description: "The labels to add to the S3 Web Ingress."
@@ -490,6 +534,17 @@ questions:
                       schema:
                         type: dict
                         required: false
+                        attrs:
+                          - variable: key
+                            description: "key"
+                            label: "key"
+                            schema:
+                              type: string
+                          - variable: value
+                            description: "value"
+                            label: "value"
+                            schema:
+                              type: string
 
                     - variable: hosts
                       description: "The hosts to use for the S3 Web Ingress."
@@ -582,6 +637,17 @@ questions:
                       schema:
                         type: dict
                         required: false
+                        attrs:
+                          - variable: key
+                            description: "key"
+                            label: "key"
+                            schema:
+                              type: string
+                          - variable: value
+                            description: "value"
+                            label: "value"
+                            schema:
+                              type: string
 
                     - variable: labels
                       description: "The labels to add to the K2V API Ingress."
@@ -589,6 +655,17 @@ questions:
                       schema:
                         type: dict
                         required: false
+                        attrs:
+                          - variable: key
+                            description: "key"
+                            label: "key"
+                            schema:
+                              type: string
+                          - variable: value
+                            description: "value"
+                            label: "value"
+                            schema:
+                              type: string
 
                     - variable: hosts
                       description: "The hosts to use for the K2V API Ingress."
