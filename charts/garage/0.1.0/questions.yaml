@@ -85,6 +85,7 @@ questions:
             items:
               - variable: peer
                 description: "Peer"
+                label: "Peer"
                 schema:
                   type: string
 
@@ -405,6 +406,7 @@ questions:
                         items:
                           - variable: hostItem
                             description: "Host"
+                            label: "Host"
                             schema:
                               type: dict
                               attrs:
@@ -423,6 +425,7 @@ questions:
                                     items:
                                       - variable: pathItem
                                         description: "Path"
+                                        label: "Path"
                                         schema:
                                           type: dict
                                           attrs:
@@ -496,6 +499,7 @@ questions:
                         items:
                           - variable: hostItem
                             description: "Host"
+                            label: "Host"
                             schema:
                               type: dict
                               attrs:
@@ -514,6 +518,7 @@ questions:
                                     items:
                                       - variable: pathItem
                                         description: "Path"
+                                        label: "Path"
                                         schema:
                                           type: dict
                                           attrs:
@@ -593,6 +598,7 @@ questions:
                         items:
                           - variable: hostItem
                             description: "Host"
+                            label: "Host"
                             schema:
                               type: dict
                               attrs:
@@ -611,6 +617,7 @@ questions:
                                     items:
                                       - variable: pathItem
                                         description: "Path"
+                                        label: "Path"
                                         schema:
                                           type: dict
                                           attrs:
@@ -732,6 +739,7 @@ questions:
                         items:
                           - variable: relabelingItem
                             description: "Relabeling"
+                            label: "Relabeling"
                             schema:
                               type: dict
                               attrs:
@@ -744,6 +752,7 @@ questions:
                                     items:
                                       - variable: sourceLabel
                                         description: "Source Label"
+                                        label: "Source Label"
                                         schema:
                                           type: string
                                 - variable: targetLabel
