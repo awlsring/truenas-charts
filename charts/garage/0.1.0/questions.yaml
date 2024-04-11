@@ -775,6 +775,17 @@ questions:
                       schema:
                         type: dict
                         required: false
+                        attrs:
+                          - variable: key
+                            description: "key"
+                            label: "key"
+                            schema:
+                              type: string
+                          - variable: value
+                            description: "value"
+                            label: "value"
+                            schema:
+                              type: string
 
                     - variable: interval
                       description: "The interval to use for the Service Monitor."
@@ -799,13 +810,6 @@ questions:
                         type: string
                         default: "http"
                         required: true
-
-                    - variable: tlsConfig
-                      description: "The TLS configuration to use for the Service Monitor."
-                      label: "Service Monitor TLS Configuration"
-                      schema:
-                        type: dict
-                        required: false
 
                     - variable: relabelings
                       description: "The relabelings to use for the Service Monitor."
