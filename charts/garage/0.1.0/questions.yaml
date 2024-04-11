@@ -82,6 +82,11 @@ questions:
             type: list
             default: []
             required: false
+            items:
+              - variable: peer
+                description: "Peer"
+                schema:
+                  type: string
 
         - variable: kubernetesSkipCrd
           description: "Whether to skip the CRD creation for the Kubernetes discovery."
