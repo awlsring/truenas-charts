@@ -16,7 +16,7 @@ groups:
 
 questions:
   - variable: garage
-    description: "Garage Configuration"
+    label: "Garage Configuration"
     group: "Garage Configuration"
     schema:
       type: dict
@@ -145,7 +145,7 @@ questions:
                         required: false
 
   - variable: persistence
-    description: "Persistence Configuration"
+    label: "Persistence Configuration"
     group: "Persistence Configuration"
     schema:
       type: dict
@@ -204,7 +204,7 @@ questions:
                   required: true
 
   - variable: deployment
-    description: "Deployment Configuration"
+    label: "Deployment Configuration"
     group: "Deployment Configuration"
     schema:
       type: dict
@@ -232,7 +232,7 @@ questions:
             required: true
 
   - variable: serviceAccount
-    description: "Service Account Configuration"
+    label: "Service Account Configuration"
     group: "Service Account Configuration"
     schema:
       type: dict
@@ -261,7 +261,7 @@ questions:
             required: false
 
   - variable: service
-    description: "Service Configuration"
+    label: "Service Configuration"
     group: "Service Configuration"
     schema:
       type: dict
@@ -342,7 +342,7 @@ questions:
                         required: false
 
   - variable: ingress
-    description: "Ingress Configuration"
+    label: "Ingress Configuration"
     group: "Ingress Configuration"
     schema:
       type: dict
@@ -636,7 +636,7 @@ questions:
                                                 required: true
 
   - variable: monitoring
-    description: "Monitoring Configuration"
+    label: "Monitoring Configuration"
     group: "Monitoring Configuration"
     schema:
       type: dict
