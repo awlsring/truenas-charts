@@ -7,5 +7,5 @@ type: application
 home: https://garagehq.deuxfleurs.fr
 icon: https://garagehq.deuxfleurs.fr/images/garage-logo.svg
 
-version: 0.9.3
+version: 0.1.0
 appVersion: "0.9.3"

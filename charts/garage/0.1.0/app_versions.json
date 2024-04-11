@@ -1,5 +1,5 @@
 {
-  "0.9.3": {
+  "0.1.0": {
     "healthy": true,
     "supported": true,
     "healthy_error": null,
@@ -11,8 +11,8 @@
       "definitions/certificate",
       "definitions/timezone"
     ],
-    "human_version": "0.9.3",
-    "version": "0.9.3",
+    "human_version": "0.1.0",
+    "version": "0.1.0",
     "chart_metadata": {
       "annotations": {
         "max_scale_version": "24.04.0",
@@ -38,7 +38,7 @@
       "name": "garage",
       "sources": ["https://garagehq.deuxfleurs.fr/"],
       "type": "application",
-      "version": "0.9.3"
+      "version": "0.1.0"
     },
     "app_metadata": null,
     "schema": {

@@ -1,5 +1,5 @@
-# Garage Chart for TrueNAS SCALE
+# TrueNAS SCALE Charts
 
-A helm chart for deploying [Garage](https://garagehq.deuxfleurs.fr/) to TrueNAS SCALE.
+Repo containing helm charts for TrueNAS SCALE.
 
-In development, probably doesn't work yet.
+Things in here are probably in development so good luck.

@@ -1,0 +1,770 @@
+groups:
+  - name: Garage Configuration
+    description: Configuration for the garage application
+  - name: Persistence Configuration
+    description: Configuration for the garage persistence
+  - name: Deployment Configuration
+    description: Configuration for the garage deployment
+  - name: Service Account Configuration
+    description: Configuration for the garage service account
+  - name: Service Configuration
+    description: Configuration for the garage service
+  - name: Ingress Configuration
+    description: Configuration for ingress
+  - name: Monitoring Configuration
+    description: Configuration for monitoring
+
+questions:
+  - variable: garage
+    description: "Garage Configuration"
+    group: "Garage Configuration"
+    schema:
+      type: dict
+      required: true
+      attrs:
+        - variable: dbEngine
+          description: "The database engine to use. Defaults to lmdb"
+          label: "Database Engine"
+          schema:
+            type: string
+            default: string
+            required: true
+            enum:
+              - value: "lmdb"
+                description: "LMDB"
+              - value: "sqlite"
+                description: "SQLite"
+
+        - variable: blockSize
+          description: "The block size to use for the object storage."
+          label: "Block Size"
+          schema:
+            type: string
+            default: "1048576"
+            required: true
+
+        - variable: replicationMode
+          description: "The replication mode to use for the object storage."
+          label: "Replication Mode"
+          schema:
+            type: string
+            default: "1"
+            required: true
+
+        - variable: compressionLevel
+          description: "The compression level to use for the object storage."
+          label: "Compression Level"
+          schema:
+            type: string
+            default: "1"
+            required: true
+
+        - variable: rpcBindAddr
+          description: "The address to bind the RPC server to."
+          label: "RPC Bind Address"
+          schema:
+            type: string
+            default: "[::]:3901"
+            required: true
+
+        - variable: rpcSecret
+          description: "The secret to use for the RPC server. If not given, a random secret will be generated and stored in a Secret object."
+          label: "RPC Secret"
+          schema:
+            type: string
+            default: ""
+            required: false
+
+        - variable: bootstrapPeers
+          description: "The bootstrap peers to use for the object storage."
+          label: "Bootstrap Peers"
+          schema:
+            type: list
+            default: []
+            required: false
+
+        - variable: kubernetesSkipCrd
+          description: "Whether to skip the CRD creation for the Kubernetes discovery."
+          label: "Skip CRD Creation"
+          schema:
+            type: boolean
+            default: false
+            required: false
+
+        - variable: s3
+          description: "S3 Configuration"
+          label: "S3 Configuration"
+          schema:
+            type: dict
+            required: false
+            attrs:
+              - variable: api
+                description: "S3 API Configuration"
+                label: "S3 API Configuration"
+                schema:
+                  type: dict
+                  required: false
+                  attrs:
+                    - variable: region
+                      description: "The region to use for the S3 API."
+                      label: "S3 API Region"
+                      schema:
+                        type: string
+                        default: "garage"
+                        required: false
+
+                    - variable: rootDomain
+                      description: "The root domain to use for the S3 API."
+                      label: "S3 API Root Domain"
+                      schema:
+                        type: string
+                        default: ".s3.garage.tld"
+                        required: false
+
+              - variable: web
+                description: "S3 Web Configuration"
+                label: "S3 Web Configuration"
+                schema:
+                  type: dict
+                  required: false
+                  attrs:
+                    - variable: rootDomain
+                      description: "The root domain to use for the S3 Web."
+                      label: "S3 Web Root Domain"
+                      schema:
+                        type: string
+                        default: ".web.garage.tld"
+                        required: false
+
+                    - variable: index
+                      description: "The index file to use for the S3 Web."
+                      label: "S3 Web Index File"
+                      schema:
+                        type: string
+                        default: "index.html"
+                        required: false
+
+  - variable: persistence
+    description: "Persistence Configuration"
+    group: "Persistence Configuration"
+    schema:
+      type: dict
+      required: true
+      attrs:
+        - variable: enabled
+          description: "Whether to enable persistence for the garage application."
+          label: "Enable Persistence"
+          schema:
+            type: boolean
+            default: false
+            required: true
+
+        - variable: meta
+          description: "The host path to use for the metadata storage."
+          label: "Metadata Storage Host Path"
+          schema:
+            type: dict
+            required: false
+            attrs:
+              - variable: hostPath
+                description: "The host path to use for the metadata storage."
+                label: "Metadata Storage Host Path"
+                schema:
+                  type: string
+                  default: "/mnt/meta"
+                  required: true
+              - variable: size
+                description: "The size to use for the metadata storage."
+                label: "Metadata Storage Size"
+                schema:
+                  type: string
+                  default: "100Mi"
+                  required: true
+
+        - variable: data
+          description: "The host path to use for the data storage."
+          label: "Data Storage Host Path"
+          schema:
+            type: dict
+            required: false
+            attrs:
+              - variable: hostPath
+                description: "The host path to use for the data storage."
+                label: "Data Storage Host Path"
+                schema:
+                  type: string
+                  default: "/mnt/data"
+                  required: true
+              - variable: size
+                description: "The size to use for the data storage."
+                label: "Data Storage Size"
+                schema:
+                  type: string
+                  default: "100Mi"
+                  required: true
+
+  - variable: deployment
+    description: "Deployment Configuration"
+    group: "Deployment Configuration"
+    schema:
+      type: dict
+      required: true
+      attrs:
+        - variable: kind
+          description: "The kind of deployment to use for the garage application."
+          label: "Deployment Kind"
+          schema:
+            type: string
+            default: "StatefulSet"
+            required: true
+            enum:
+              - value: "StatefulSet"
+                description: "StatefulSet"
+              - value: "DaemonSet"
+                description: "DaemonSet"
+
+        - variable: replicaCount
+          description: "The number of replicas to use for the garage application."
+          label: "Replica Count"
+          schema:
+            type: int
+            default: 1
+            required: true
+
+  - variable: serviceAccount
+    description: "Service Account Configuration"
+    group: "Service Account Configuration"
+    schema:
+      type: dict
+      required: true
+      attrs:
+        - variable: create
+          description: "Whether to create a service account for the garage application."
+          label: "Create Service Account"
+          schema:
+            type: boolean
+            default: true
+            required: true
+
+        - variable: annotations
+          description: "The annotations to add to the service account."
+          label: "Service Account Annotations"
+          schema:
+            type: dict
+            required: false
+
+        - variable: name
+          description: "The name of the service account to use."
+          label: "Service Account Name"
+          schema:
+            type: string
+            required: false
+
+  - variable: service
+    description: "Service Configuration"
+    group: "Service Configuration"
+    schema:
+      type: dict
+      required: true
+      attrs:
+        - variable: type
+          description: "The type of service to use for the garage application."
+          label: "Service Type"
+          schema:
+            type: string
+            default: "ClusterIP"
+            required: true
+            enum:
+              - value: "ClusterIP"
+                description: "ClusterIP"
+              - value: "NodePort"
+                description: "NodePort"
+              - value: "LoadBalancer"
+                description: "LoadBalancer"
+
+        - variable: s3
+          description: "S3 Service Configuration"
+          label: "S3 Service Configuration"
+          schema:
+            type: dict
+            required: false
+            attrs:
+              - variable: api
+                description: "S3 API Configuration"
+                label: "S3 API Configuration"
+                schema:
+                  type: dict
+                  required: false
+                  attrs:
+                    - variable: port
+                      description: "The port to use for the S3 API."
+                      label: "S3 API Port"
+                      schema:
+                        type: int
+                        default: 3900
+                        required: false
+
+              - variable: web
+                description: "S3 Web Configuration"
+                label: "S3 Web Configuration"
+                schema:
+                  type: dict
+                  required: false
+                  attrs:
+                    - variable: port
+                      description: "The port to use for the S3 Web."
+                      label: "S3 Web Port"
+                      schema:
+                        type: int
+                        default: 3902
+                        required: false
+
+        - variable: k2v
+          description: "K2V Service Configuration"
+          label: "K2V Service Configuration"
+          schema:
+            type: dict
+            required: false
+            attrs:
+              - variable: api
+                description: "K2V API Configuration"
+                label: "K2V API Configuration"
+                schema:
+                  type: dict
+                  required: false
+                  attrs:
+                    - variable: port
+                      description: "The port to use for the K2V API."
+                      label: "K2V API Port"
+                      schema:
+                        type: int
+                        default: 3904
+                        required: false
+
+  - variable: ingress
+    description: "Ingress Configuration"
+    group: "Ingress Configuration"
+    schema:
+      type: dict
+      required: true
+      attrs:
+        - variable: s3
+          description: "S3 Ingress Configuration"
+          label: "S3 Ingress Configuration"
+          schema:
+            type: dict
+            required: false
+            attrs:
+              - variable: api
+                description: "S3 API Ingress Configuration"
+                label: "S3 API Ingress Configuration"
+                schema:
+                  type: dict
+                  required: false
+                  attrs:
+                    - variable: enabled
+                      description: "Whether to enable the S3 API Ingress."
+                      label: "Enable S3 API Ingress"
+                      schema:
+                        type: boolean
+                        default: false
+                        required: true
+
+                    - variable: className
+                      description: "The class name to use for the S3 API Ingress."
+                      label: "S3 API Ingress Class Name"
+                      schema:
+                        type: string
+                        required: false
+
+                    - variable: annotations
+                      description: "The annotations to add to the S3 API Ingress."
+                      label: "S3 API Ingress Annotations"
+                      schema:
+                        type: dict
+                        required: false
+
+                    - variable: labels
+                      description: "The labels to add to the S3 API Ingress."
+                      label: "S3 API Ingress Labels"
+                      schema:
+                        type: dict
+                        required: false
+
+                    - variable: hosts
+                      description: "The hosts to use for the S3 API Ingress."
+                      label: "S3 API Ingress Hosts"
+                      schema:
+                        type: list
+                        required: false
+                        items:
+                          - variable: hostItem
+                            description: "Host"
+                            schema:
+                              type: dict
+                              attrs:
+                                - variable: host
+                                  description: "The host to use for the S3 API Ingress."
+                                  label: "S3 API Ingress Host"
+                                  schema:
+                                    type: string
+                                    required: true
+                                - variable: paths
+                                  description: "The paths to use for the S3 API Ingress."
+                                  label: "S3 API Ingress Paths"
+                                  schema:
+                                    type: list
+                                    required: true
+                                    items:
+                                      - variable: pathItem
+                                        description: "Path"
+                                        schema:
+                                          type: dict
+                                          attrs:
+                                            - variable: path
+                                              description: "The path to use for the S3 API Ingress."
+                                              label: "S3 API Ingress Path"
+                                              schema:
+                                                type: string
+                                                required: true
+                                            - variable: pathType
+                                              description: "The path type to use for the S3 API Ingress."
+                                              label: "S3 API Ingress Path Type"
+                                              schema:
+                                                type: string
+                                                required: false
+                                                enum:
+                                                  - value: "ImplementationSpecific"
+                                                    description: "Implementation Specific"
+                                                  - value: "Exact"
+                                                    description: "Exact"
+                                                  - value: "Prefix"
+                                                    description: "Prefix"
+                                            - variable: svcPort
+                                              description: "The service port to use for the S3 API Ingress."
+                                              label: "S3 API Ingress Service Port"
+                                              schema:
+                                                type: int
+                                                required: true
+
+              - variable: web
+                description: "S3 Web Ingress Configuration"
+                label: "S3 Web Ingress Configuration"
+                schema:
+                  type: dict
+                  required: false
+                  attrs:
+                    - variable: enabled
+                      description: "Whether to enable the S3 Web Ingress."
+                      label: "Enable S3 Web Ingress"
+                      schema:
+                        type: boolean
+                        default: false
+                        required: true
+
+                    - variable: className
+                      description: "The class name to use for the S3 Web Ingress."
+                      label: "S3 Web Ingress Class Name"
+                      schema:
+                        type: string
+                        required: false
+
+                    - variable: annotations
+                      description: "The annotations to add to the S3 Web Ingress."
+                      label: "S3 Web Ingress Annotations"
+                      schema:
+                        type: dict
+                        required: false
+
+                    - variable: labels
+                      description: "The labels to add to the S3 Web Ingress."
+                      label: "S3 Web Ingress Labels"
+                      schema:
+                        type: dict
+                        required: false
+
+                    - variable: hosts
+                      description: "The hosts to use for the S3 Web Ingress."
+                      label: "S3 Web Ingress Hosts"
+                      schema:
+                        type: list
+                        items:
+                          - variable: hostItem
+                            description: "Host"
+                            schema:
+                              type: dict
+                              attrs:
+                                - variable: host
+                                  description: "The host to use for the S3 API Ingress."
+                                  label: "S3 API Ingress Host"
+                                  schema:
+                                    type: string
+                                    required: true
+                                - variable: paths
+                                  description: "The paths to use for the S3 API Ingress."
+                                  label: "S3 API Ingress Paths"
+                                  schema:
+                                    type: list
+                                    required: true
+                                    items:
+                                      - variable: pathItem
+                                        description: "Path"
+                                        schema:
+                                          type: dict
+                                          attrs:
+                                            - variable: path
+                                              description: "The path to use for the S3 API Ingress."
+                                              label: "S3 API Ingress Path"
+                                              schema:
+                                                type: string
+                                                required: true
+                                            - variable: pathType
+                                              description: "The path type to use for the S3 API Ingress."
+                                              label: "S3 API Ingress Path Type"
+                                              schema:
+                                                type: string
+                                                required: false
+                                                enum:
+                                                  - value: "ImplementationSpecific"
+                                                    description: "Implementation Specific"
+                                                  - value: "Exact"
+                                                    description: "Exact"
+                                                  - value: "Prefix"
+                                                    description: "Prefix"
+                                            - variable: svcPort
+                                              description: "The service port to use for the S3 API Ingress."
+                                              label: "S3 API Ingress Service Port"
+                                              schema:
+                                                type: int
+                                                required: true
+        - variable: k2v
+          description: "K2V Ingress Configuration"
+          label: "K2V Ingress Configuration"
+          schema:
+            type: dict
+            required: false
+            attrs:
+              - variable: api
+                description: "K2V API Ingress Configuration"
+                label: "K2V API Ingress Configuration"
+                schema:
+                  type: dict
+                  required: false
+                  attrs:
+                    - variable: enabled
+                      description: "Whether to enable the K2V API Ingress."
+                      label: "Enable K2V API Ingress"
+                      schema:
+                        type: boolean
+                        default: false
+                        required: true
+
+                    - variable: className
+                      description: "The class name to use for the K2V API Ingress."
+                      label: "K2V API Ingress Class Name"
+                      schema:
+                        type: string
+                        required: false
+
+                    - variable: annotations
+                      description: "The annotations to add to the K2V API Ingress."
+                      label: "K2V API Ingress Annotations"
+                      schema:
+                        type: dict
+                        required: false
+
+                    - variable: labels
+                      description: "The labels to add to the K2V API Ingress."
+                      label: "K2V API Ingress Labels"
+                      schema:
+                        type: dict
+                        required: false
+
+                    - variable: hosts
+                      description: "The hosts to use for the K2V API Ingress."
+                      label: "K2V API Ingress Hosts"
+                      schema:
+                        type: list
+                        items:
+                          - variable: hostItem
+                            description: "Host"
+                            schema:
+                              type: dict
+                              attrs:
+                                - variable: host
+                                  description: "The host to use for the K2V API Ingress."
+                                  label: "K2V API Ingress Host"
+                                  schema:
+                                    type: string
+                                    required: true
+                                - variable: paths
+                                  description: "The paths to use for the K2V API Ingress."
+                                  label: "K2V API Ingress Paths"
+                                  schema:
+                                    type: list
+                                    required: true
+                                    items:
+                                      - variable: pathItem
+                                        description: "Path"
+                                        schema:
+                                          type: dict
+                                          attrs:
+                                            - variable: path
+                                              description: "The path to use for the K2V API Ingress."
+                                              label: "K2V API Ingress Path"
+                                              schema:
+                                                type: string
+                                                required: true
+                                            - variable: pathType
+                                              description: "The path type to use for the K2V API Ingress."
+                                              label: "K2V API Ingress Path Type"
+                                              schema:
+                                                type: string
+                                                required: false
+                                                enum:
+                                                  - value: "ImplementationSpecific"
+                                                    description: "Implementation Specific"
+                                                  - value: "Exact"
+                                                    description: "Exact"
+                                                  - value: "Prefix"
+                                                    description: "Prefix"
+                                            - variable: svcPort
+                                              description: "The service port to use for the K2V API Ingress."
+                                              label: "K2V API Ingress Service Port"
+                                              schema:
+                                                type: int
+                                                required: true
+
+  - variable: monitoring
+    description: "Monitoring Configuration"
+    group: "Monitoring Configuration"
+    schema:
+      type: dict
+      required: true
+      attrs:
+        - variable: metrics
+          description: "Metrics Configuration"
+          label: "Metrics Configuration"
+          schema:
+            type: dict
+            required: false
+            attrs:
+              - variable: enabled
+                description: "Whether to enable monitoring for the garage application."
+                label: "Enable Monitoring"
+                schema:
+                  type: boolean
+                  default: false
+                  required: true
+
+              - variable: serviceMonitor
+                description: "Service Monitor Configuration"
+                label: "Service Monitor Configuration"
+                schema:
+                  type: dict
+                  required: false
+                  attrs:
+                    - variable: enabled
+                      description: "Whether to enable the Service Monitor CRD."
+                      label: "Enable Service Monitor"
+                      schema:
+                        type: boolean
+                        default: false
+                        required: true
+
+                    - variable: path
+                      description: "The path to use for the Service Monitor."
+                      label: "Service Monitor Path"
+                      schema:
+                        type: string
+                        default: "/metrics"
+                        required: true
+
+                    - variable: labels
+                      description: "The labels to add to the Service Monitor."
+                      label: "Service Monitor Labels"
+                      schema:
+                        type: dict
+                        required: false
+
+                    - variable: interval
+                      description: "The interval to use for the Service Monitor."
+                      label: "Service Monitor Interval"
+                      schema:
+                        type: string
+                        default: "15s"
+                        required: true
+
+                    - variable: scrapeTimeout
+                      description: "The scrape timeout to use for the Service Monitor."
+                      label: "Service Monitor Scrape Timeout"
+                      schema:
+                        type: string
+                        default: "10s"
+                        required: true
+
+                    - variable: scheme
+                      description: "The scheme to use for the Service Monitor."
+                      label: "Service Monitor Scheme"
+                      schema:
+                        type: string
+                        default: "http"
+                        required: true
+
+                    - variable: tlsConfig
+                      description: "The TLS configuration to use for the Service Monitor."
+                      label: "Service Monitor TLS Configuration"
+                      schema:
+                        type: dict
+                        required: false
+
+                    - variable: relabelings
+                      description: "The relabelings to use for the Service Monitor."
+                      label: "Service Monitor Relabelings"
+                      schema:
+                        type: list
+                        required: false
+                        items:
+                          - variable: relabelingItem
+                            description: "Relabeling"
+                            schema:
+                              type: dict
+                              attrs:
+                                - variable: sourceLabels
+                                  description: "The source labels to use for the relabeling."
+                                  label: "Relabeling Source Labels"
+                                  schema:
+                                    type: list
+                                    required: true
+                                    items:
+                                      - variable: sourceLabel
+                                        description: "Source Label"
+                                        schema:
+                                          type: string
+                                - variable: targetLabel
+                                  description: "The target label to use for the relabeling."
+                                  label: "Relabeling Target Label"
+                                  schema:
+                                    type: string
+                                - variable: regex
+                                  description: "The regex to use for the relabeling."
+                                  label: "Relabeling Regex"
+                                  schema:
+                                    type: string
+                                - variable: replacement
+                                  description: "The replacement to use for the relabeling."
+                                  label: "Relabeling Replacement"
+                                  schema:
+                                    type: string
+                                - variable: action
+                                  description: "The action to use for the relabeling."
+                                  label: "Relabeling Action"
+                                  schema:
+                                    type: string
+                                    enum:
+                                      - value: "replace"
+                                        description: "Replace"
+                                      - value: "keep"
+                                        description: "Keep"
+                                      - value: "drop"
+                                        description: "Drop"
